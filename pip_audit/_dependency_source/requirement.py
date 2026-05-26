@@ -168,7 +168,11 @@ class RequirementSource(DependencySource):
             return
 
         ve_args = []
-        if self._require_hashes:
+        if require_hashes:
+            # `pip` doesn't always reject non-exact pinned requirements in `--require-hashes`
+            # mode (e.g. `pkg<=1.0 --hash=...`), so enforce the exact-pin invariant ourselves.
+            for _ in self._collect_preresolved_deps(iter(reqs), require_hashes):
+                pass
             ve_args.append("--require-hashes")
         for filename in filenames:
             ve_args.extend(["-r", str(filename)])
