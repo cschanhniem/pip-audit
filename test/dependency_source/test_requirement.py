@@ -536,7 +536,9 @@ def test_requirement_source_disable_pip_duplicate_dependencies(req_file):
 
 def test_requirement_source_disable_pip_duplicate_dependencies_with_extras(req_file):
     source = _init_requirement(
-        [(req_file(), "aiohttp==3.9\naiohttp[speedups]==3.9")], disable_pip=True, no_deps=True
+        [(req_file(), "aiohttp==3.9\naiohttp[speedups]==3.9")],
+        disable_pip=True,
+        no_deps=True,
     )
 
     specs = list(source.collect())
